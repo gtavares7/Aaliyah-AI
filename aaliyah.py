@@ -8,6 +8,10 @@ import speech_recognition as sr
 import pyttsx3
 import datetime
 import time
+import os
+import webbrowser
+import wikipedia
+import pywhatkit
 
 # speech-to-text using Microsoft speech (sapi5)
 engine = pyttsx3.init('sapi5')
@@ -61,4 +65,43 @@ def takeCommand():
             return 'None'
 
         return query
+
+# main function
+if __name__ == '__main__':
+    clear = lambda: os.system('cls')
+
+clear()
+wishMe()
+username()
+
+while True:
+    query = takeCommand().lower()
+
+    # search wikipedia
+    if 'wikipedia' in query:
+        speak('Searching wikipedia...')
+        query = query.replace('wikipedia', '')
+        results = wikipedia.summary(query, sentence = 3)
+        speak('According to wikipedia')
+        speak(results)
+        print('results')
+
+    # open youtube
+    elif 'open youtube' in query:
+        speak('Opening youtube')
+        webbrowser.open_new_tab('https://youtube.com')
+        time.sleep(2)
+
+    # open Google
+    elif 'open google' in query:
+        speak('opening google')
+        webbrowser.open_new_tab('https://www.google.ca')
+        time.sleep(2)
+
+    # play music
+    elif 'play' in query:
+        song = query.replace('play', '')
+        speak('Playing' + song)
+        pywhatkit.playonyt(song)
+        time.sleep(5)
 
