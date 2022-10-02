@@ -13,6 +13,7 @@ import webbrowser
 import wikipedia
 import pywhatkit
 import pyjokes
+import comtypes
 
 # speech-to-text using Microsoft speech (sapi5)
 engine = pyttsx3.init('sapi5')
@@ -92,6 +93,16 @@ while True:
     elif 'exit' in query:
         speak('I am going to sleep now')
         exit()
+
+    # DIALOGUE
+    elif 'who are you' in query:
+        speak('My name is Aaliyah. I am an AI')
+
+    elif 'who created you' in query:
+        speak('I was created by my father Gabriel')
+
+    elif 'how are you doing today' in query:
+        speak('I am doing great, thanks for asking')
 
     # tell cureent time
     elif 'time' in query:
