@@ -41,3 +41,24 @@ def username():
     speak('welcome')
     speak(uname)
     speak('How can I help you?')
+
+# voice recognition using Google services
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print('Listening...')
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+        try:
+            print('Recognizing...')
+            query = r.recognize_google(audio, language = 'en')
+            print(f'User said: {query}\n')
+
+        except Exception as e:
+            print(e)
+            print('Unable to recognize your voice.')
+            return 'None'
+
+        return query
+
