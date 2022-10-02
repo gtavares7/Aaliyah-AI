@@ -78,8 +78,23 @@ username()
 while True:
     query = takeCommand().lower()
 
+    # all commands said are stored here in
+    # query and are then converted to lowercase
+    # for easy recognition of command
+
+    # ADMIN FUNCTIONS
+    if 'stop listening' in query:
+        speak('How long shall I pause for?')
+        a = int(takeCommand())
+        time.sleep(a)
+        print('a')
+
+    elif 'exit' in query:
+        speak('I am going to sleep now')
+        exit()
+
     # tell cureent time
-    if 'time' in query:
+    elif 'time' in query:
         time = datetime.datetime.now().strftime('%I:%M %p')
         print(time)
         speak('Current time is' + time)
