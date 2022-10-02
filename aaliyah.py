@@ -12,6 +12,7 @@ import os
 import webbrowser
 import wikipedia
 import pywhatkit
+import pyjokes
 
 # speech-to-text using Microsoft speech (sapi5)
 engine = pyttsx3.init('sapi5')
@@ -77,14 +78,27 @@ username()
 while True:
     query = takeCommand().lower()
 
+    # tell cureent time
+    if 'time' in query:
+        time = datetime.datetime.now().strftime('%I:%M %p')
+        print(time)
+        speak('Current time is' + time)
+        time.sleep(5)
+
     # search wikipedia
-    if 'wikipedia' in query:
+    elif 'wikipedia' in query:
         speak('Searching wikipedia...')
         query = query.replace('wikipedia', '')
         results = wikipedia.summary(query, sentence = 3)
         speak('According to wikipedia')
         speak(results)
         print('results')
+
+    # open website
+    elif 'open up' in query:
+        website = query.replace('open up', '')
+        speak('opening up' + website)
+        webbrowser.open_new_tab(website)
 
     # open youtube
     elif 'open youtube' in query:
@@ -105,3 +119,12 @@ while True:
         pywhatkit.playonyt(song)
         time.sleep(5)
 
+    elif 'search' in query:
+        search = query.replace('search', '')
+        speak('looking up' + search)
+        pywhatkit.info(search, lines = 4)
+        time.sleep(3)
+    
+    elif 'tell me a joke' in query:
+        speak(pyjokes.get_joke())
+        time.sleep(5)
