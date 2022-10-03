@@ -47,24 +47,7 @@ def wishMe():
 
 # voice recognition using Google services
 def takeCommand():
-    # Try block to check for errors
-    try:
-        # microphone as source
-        with sr.Microphone() as source:
-            print('Listening')
-            # declare Voice variable to listen to source
-            voice = listener.listen(source)
-            # once we have the source, use Google to convert the voice into text
-            query = listener.recognize_google(voice)
-            # convert text to lowercase
-            query = query.lower()
-            # check if Hey Aaliyah is in command, if not then quit
-            if 'hey aaliyah' in query:
-                # remove hey aaliyah from command
-                query = query.replace('hey aaliyah', '')
-                print(query)
-    except:
-        pass
+    query = input()
     return query
 
 # greet me
@@ -74,7 +57,6 @@ def run_aaliyah():
     speak('How can I help you?')
     # take output from takeCommand() and use it an input for run_aaliyah()
     query = takeCommand()
-    print(query)
     
     # ADMIN FUNCTIONS
     if 'stop listening' in query:
@@ -146,6 +128,7 @@ def run_aaliyah():
     
     elif 'tell me a joke' in query:
         speak(pyjokes.get_joke())
+        print(pyjokes.get_joke())
         time.sleep(5)
 
     else:
