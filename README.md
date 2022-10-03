@@ -82,3 +82,9 @@ Aaliyah AI Voice assistant:"Loading your personal Assistant Aaliyah AI....
    		
 
    		 Human: Hey Aaliyah , Please turn off my PC
+
+
+### Software required:
+
+	1. portaudio
+	2. espeak
