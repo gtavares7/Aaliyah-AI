@@ -14,12 +14,16 @@ import wikipedia
 import pywhatkit
 import pyjokes
 
+# Engine properties
 listener = sr.Recognizer()
-engine = pyttsx3.init()
+engine = pyttsx3.init('espeak')
 voices = engine.getProperty('voices')
 engine.setProperty('voice',voices[1].id)
 rate = engine.getProperty('rate')
-engine.setProperty('rate', 175)
+engine.setProperty('rate', 150)
+volume = engine.getProperty('volume')
+engine.setProperty('volume', 2.0)
+
 
 def speak(audio):
     engine.say(audio)
@@ -30,12 +34,15 @@ def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
         speak('Good Morning!')
+        print('Good Morning!')
     
     elif hour >= 12 and hour < 18:
         speak('Good Afternoon!')
+        print('Good Afternoon')
 
     else:
         speak('Good Evening')
+        print('Good Evening')
 
 
 # voice recognition using Google services
