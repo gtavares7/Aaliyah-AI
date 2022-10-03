@@ -13,12 +13,13 @@ import webbrowser
 import wikipedia
 import pywhatkit
 import pyjokes
-import comtypes
 
-# speech-to-text using Microsoft speech (sapi5)
-engine = pyttsx3.init('sapi5')
+listener = sr.Recognizer()
+engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice',voices[1].id)
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 175)
 
 def speak(audio):
     engine.say(audio)
@@ -35,49 +36,34 @@ def wishMe():
 
     else:
         speak('Good Evening')
-    
-    assname = ('Aaliyah 1 point 0')
-    speak('I am your AI')
-    speak(assname)
 
-# remember name
-def username():
-    speak('What shall I call you?')
-    uname = takeCommand()
-    speak('welcome')
-    speak(uname)
-    speak('How can I help you?')
 
 # voice recognition using Google services
 def takeCommand():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print('Listening...')
-        r.pause_threshold = 1
-        audio = r.listen(source)
+    # Try block to check for errors
+    try:
+        # microphone as source
+        with sr.Microphone() as source:
+            print('Listening')
+            # declare Voice variable to listen to source
+            voice = listener.listen(source)
+            # once we have the source, use Google to convert the voice into text
+            query = listener.recognize_google(voice)
+            # convert text to lowercase
+            query = query.lower()
+            # check if Hey Aaliyah is in command, if not then quit
+            if 'hey aaliyah' in query:
+                # remove hey aaliyah from command
+                query = query.replace('hey aaliyah', '')
+                print(query)
+    except:
+        pass
+    return query
 
-        try:
-            print('Recognizing...')
-            query = r.recognize_google(audio, language = 'en')
-            print(f'User said: {query}\n')
-
-        except Exception as e:
-            print(e)
-            print('Unable to recognize your voice.')
-            return 'None'
-
-        return query
-
-# main function
-if __name__ == '__main__':
-    clear = lambda: os.system('cls')
-
-clear()
+# greet me
 wishMe()
-username()
 
-while True:
-    query = takeCommand().lower()
+def run_aaliyah():
 
     # all commands said are stored here in
     # query and are then converted to lowercase
@@ -154,3 +140,16 @@ while True:
     elif 'tell me a joke' in query:
         speak(pyjokes.get_joke())
         time.sleep(5)
+
+    else:
+        speak('I am sorry, I did not get that. Please say it again')
+        print('I am sorry, I did not get that. Please say it again')
+
+
+# run Aaliyah in a loop
+while True:
+    try:
+        run_aaliyah()
+    except UnboundLocalError:
+        print('No command detected! Shutting down')
+        break
